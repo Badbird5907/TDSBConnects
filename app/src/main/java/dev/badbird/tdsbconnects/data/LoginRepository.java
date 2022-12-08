@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import dev.badbird.tdsbconnects.TDSBConnectsApp;
 import dev.badbird.tdsbconnects.data.model.LoggedInUser;
 import dev.badbird.tdsbconnects.util.LoginInfoUtils;
+import lombok.Getter;
 import lombok.extern.flogger.Flogger;
 import lombok.extern.java.Log;
 
@@ -17,8 +18,8 @@ import lombok.extern.java.Log;
  */
 @Log
 public class LoginRepository {
-
-    private static volatile LoginRepository instance;
+    @Getter
+    private static volatile LoginRepository instance = new LoginRepository();
 
     // If user credentials will be cached in local storage, it is recommended it be encrypted
     // @see https://developer.android.com/training/articles/keystore
@@ -29,6 +30,7 @@ public class LoginRepository {
     }
 
     public void logout() {
+        log.info("Logging out");
         user = null;
         TDSBConnectsApp.getInstance().logout();
     }

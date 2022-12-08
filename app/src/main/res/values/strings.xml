@@ -6,4 +6,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="welcome">"Welcome, "</string>
     <string name="login_failed">"Login failed"</string>
+
+    <!-- UI related strings -->
+    <string name="logout">Logout</string>
 </resources>

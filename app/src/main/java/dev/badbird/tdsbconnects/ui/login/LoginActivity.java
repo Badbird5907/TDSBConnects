@@ -66,8 +66,13 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
             loadingProgressBar.setVisibility(View.GONE);
+            if (loginResult.getErrorString() != null) {
+                showLoginFailed(loginResult.getErrorString());
+                return;
+            }
             if (loginResult.getError() != null) {
                 showLoginFailed(loginResult.getError());
+                return;
             }
             if (loginResult.getSuccess() != null) {
                 updateUiWithUser(loginResult.getSuccess());
@@ -75,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK);
 
             //Complete and destroy login activity once successful
-            startActivity(new Intent(this, MainActivity.class));
             finish();
         });
 
@@ -129,9 +133,14 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void showLoginFailed(String errorString) {
+        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_LONG).show();
+    }
+
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();
         // TODO : initiate successful logged in experience
+        startActivity(new Intent(this, MainActivity.class));
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 

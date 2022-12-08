@@ -10,6 +10,8 @@ class LoginResult {
     private LoggedInUserView success;
     @Nullable
     private Integer error;
+    @Nullable
+    private String errorString;
 
     LoginResult(@Nullable Integer error) {
         this.error = error;
@@ -17,6 +19,10 @@ class LoginResult {
 
     LoginResult(@Nullable LoggedInUserView success) {
         this.success = success;
+    }
+
+    LoginResult(@Nullable String errorString) {
+        this.errorString = errorString;
     }
 
     @Nullable
@@ -27,5 +33,10 @@ class LoginResult {
     @Nullable
     Integer getError() {
         return error;
+    }
+
+    @Nullable
+    String getErrorString() {
+        return errorString;
     }
 }

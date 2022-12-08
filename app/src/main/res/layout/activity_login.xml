@@ -15,7 +15,7 @@
             android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="212dp"
+            android:layout_marginTop="200dp"
             android:hint="@string/prompt_student_id"
             android:inputType="text"
             android:minHeight="48dp"
@@ -29,7 +29,7 @@
             android:id="@+id/password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="4dp"
             android:hint="@string/prompt_password"
             android:imeActionLabel="@string/action_sign_in"
             android:imeOptions="actionDone"
@@ -52,9 +52,9 @@
             android:text="@string/action_sign_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintVertical_bias="0.015"
+            app:layout_constraintVertical_bias="0.02"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <ProgressBar

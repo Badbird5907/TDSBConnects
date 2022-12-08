@@ -2,32 +2,32 @@ package dev.badbird.tdsbconnects.ui.login;
 
 import android.app.Activity;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import dev.badbird.tdsbconnects.R;
-import dev.badbird.tdsbconnects.ui.login.LoginViewModel;
-import dev.badbird.tdsbconnects.ui.login.LoginViewModelFactory;
+import dev.badbird.tdsbconnects.data.Result;
+import dev.badbird.tdsbconnects.data.model.LoggedInUser;
 import dev.badbird.tdsbconnects.databinding.ActivityLoginBinding;
+import dev.badbird.tdsbconnects.ui.main.MainActivity;
+import dev.badbird.tdsbconnects.util.LoginInfoUtils;
+import lombok.extern.java.Log;
 
+@Log
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
@@ -75,9 +75,23 @@ public class LoginActivity extends AppCompatActivity {
             setResult(Activity.RESULT_OK);
 
             //Complete and destroy login activity once successful
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         });
+
+        try {
+            String[] loginInfo = LoginInfoUtils.loadLoginInfo(this);
+            if (loginInfo != null) {
+                log.info("Login info found, logging in...");
+                String username = loginInfo[0];
+                String password = loginInfo[1];
+                loginViewModel.login(username, password, true, this); // TODO rewrite this code cause im lazy rn, and add toggle for save credentials
+                return;
+            }
+        } catch (Exception e) {
+            log.warning("Failed to load login info: " + e.getMessage());
+            LoginInfoUtils.clearLoginInfo(this);
+        }
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
@@ -101,7 +115,9 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                        passwordEditText.getText().toString(),
+                        true,
+                        this);
             }
             return false;
         });
@@ -109,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(v -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
             loginViewModel.login(usernameEditText.getText().toString(),
-                    passwordEditText.getText().toString());
+                    passwordEditText.getText().toString(), true, this);
         });
     }
 

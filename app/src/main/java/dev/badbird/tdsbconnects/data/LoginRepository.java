@@ -1,10 +1,13 @@
 package dev.badbird.tdsbconnects.data;
 
+import android.content.Context;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Logger;
 
 import dev.badbird.tdsbconnects.TDSBConnectsApp;
 import dev.badbird.tdsbconnects.data.model.LoggedInUser;
+import dev.badbird.tdsbconnects.util.LoginInfoUtils;
 import lombok.extern.flogger.Flogger;
 import lombok.extern.java.Log;
 
@@ -36,17 +39,22 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public Result<LoggedInUser> login(String username, String password) {
+    public Result<LoggedInUser> login(String username, String password, boolean saveCredentials, Context context) {
         // handle login
         Result<LoggedInUser> result;
+        CompletableFuture<LoggedInUser> future = TDSBConnectsApp.getInstance().login(username, password);
         try {
-            CompletableFuture<LoggedInUser> future = TDSBConnectsApp.getInstance().login(username, password);
             LoggedInUser user = future.get();
             log.info("Logged in successfully: " + TDSBConnectsApp.getInstance().getTdsbConnects().getUserData());
             result = new Result.Success<>(user);
+            if (saveCredentials) {
+                LoginInfoUtils.saveLogin(username, password, context);
+            }
         } catch (Exception e) {
             log.severe("Failed to log in: " + e);
-            result = new Result.Error(new Exception("Error logging in"));
+            if (e.getCause() != null) {
+                result = new Result.Error(e.getCause());
+            } else result = new Result.Error(e);
         }
         if (result instanceof Result.Success) {
             setLoggedInUser(((Result.Success<LoggedInUser>) result).getData());

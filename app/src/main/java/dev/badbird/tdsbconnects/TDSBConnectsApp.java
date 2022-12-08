@@ -22,7 +22,7 @@ public class TDSBConnectsApp {
         tdsbConnects = new TDSBConnects(username, password, () -> {
             LoggedInUser user = new LoggedInUser(username, tdsbConnects.getUserData().getUserName());
             future.complete(user);
-        });
+        }, future::completeExceptionally);
         return future;
     }
 

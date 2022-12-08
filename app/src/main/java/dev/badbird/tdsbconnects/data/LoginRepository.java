@@ -29,10 +29,11 @@ public class LoginRepository {
         return user != null;
     }
 
-    public void logout() {
+    public void logout(Context context) {
         log.info("Logging out");
         user = null;
         TDSBConnectsApp.getInstance().logout();
+        LoginInfoUtils.clearLoginInfo(context);
     }
 
     private void setLoggedInUser(LoggedInUser user) {

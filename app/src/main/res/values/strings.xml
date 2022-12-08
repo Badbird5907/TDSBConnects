@@ -9,4 +9,5 @@
 
     <!-- UI related strings -->
     <string name="logout">Logout</string>
+    <string name="welcome_text">Hello, %s</string>
 </resources>

@@ -34,6 +34,7 @@ public class TDSBConnectsApp {
     private static TDSBConnectsApp instance = new TDSBConnectsApp();
 
     private TDSBConnectsApp() {
+
     }
 
     private static final Pattern SPLIT_PATTERN = Pattern.compile("(,|\\||\\s)+"); // split by , or | or space

@@ -28,4 +28,9 @@
             android:name="dev.badbird.tdsbconnects.ui.settings.SettingsFragment"
             android:label="@string/menu_settings"
             tools:layout="@xml/preferences" />
+    <fragment
+            android:id="@+id/action_debug"
+            android:name="dev.badbird.tdsbconnects.ui.debug.DebugFragment"
+            android:label="@string/action_debug"
+            tools:layout="@layout/fragment_debug" />
 </navigation>

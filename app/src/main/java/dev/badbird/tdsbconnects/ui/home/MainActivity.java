@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.nav_settings);
             return true;
         });
+
+        menu.findItem(R.id.action_debug).setOnMenuItemClickListener(item -> {
+            // open DebugFragment
+            navController.navigate(R.id.action_debug);
+            return true;
+        });
         return true;
     }
 

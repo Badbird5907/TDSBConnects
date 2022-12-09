@@ -10,5 +10,10 @@
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/action_settings"
             />
+        <item
+            android:id="@+id/action_debug"
+            android:icon="@drawable/ic_baseline_bug_report_24"
+            android:title="@string/action_debug"
+            />
     </group>
 </menu>

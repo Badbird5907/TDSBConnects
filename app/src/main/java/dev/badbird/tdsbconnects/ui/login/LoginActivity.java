@@ -20,10 +20,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import dev.badbird.tdsbconnects.R;
-import dev.badbird.tdsbconnects.data.Result;
-import dev.badbird.tdsbconnects.data.model.LoggedInUser;
 import dev.badbird.tdsbconnects.databinding.ActivityLoginBinding;
-import dev.badbird.tdsbconnects.ui.main.MainActivity;
+import dev.badbird.tdsbconnects.ui.home.MainActivity;
 import dev.badbird.tdsbconnects.util.LoginInfoUtils;
 import lombok.extern.java.Log;
 

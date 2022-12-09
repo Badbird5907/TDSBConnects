@@ -10,4 +10,16 @@
     <!-- UI related strings -->
     <string name="logout">Logout</string>
     <string name="welcome_text">Hello, %s</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">%s</string>
+    <string name="nav_header_subtitle">%s</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 </resources>

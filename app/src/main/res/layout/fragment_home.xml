@@ -6,17 +6,112 @@
         android:layout_height="match_parent"
         tools:context=".ui.home.HomeFragment">
 
-    <TextView
-            android:id="@+id/text_home"
-            android:layout_width="match_parent"
+    <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:textAlignment="center"
-            android:textSize="20sp"
+            android:layout_margin="10dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardMaxElevation="12dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            android:id="@+id/home_header"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="9dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginTop="264dp"
+            app:layout_constraintHorizontal_bias="0.0">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_header"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="20sp"
+                android:id="@+id/text_home"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="20dp"
+            app:cardMaxElevation="12dp"
+            app:cardPreventCornerOverlap="true"
+            app:cardUseCompatPadding="true"
+            android:id="@+id/home_next_class"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_header"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="9dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintHorizontal_bias="1.0">
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                >
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_next_class"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:layout_marginTop="1pt"
+                    android:id="@+id/next_class_title"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:id="@+id/next_class_course_code"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_next_class_course_desc"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:id="@+id/next_class_course_desc"
+                    android:visibility="gone"
+                    android:textStyle="bold" />
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_next_class_room"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:id="@+id/next_class_room"
+                    android:visibility="gone"
+                    android:textStyle="bold" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_next_class_course_time"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:id="@+id/next_class_course_time"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

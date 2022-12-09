@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import org.w3c.dom.Text;
+
 import dev.badbird.tdsbconnects.BuildConfig;
 import dev.badbird.tdsbconnects.databinding.FragmentDebugBinding;
 
@@ -52,7 +54,11 @@ public class DebugFragment extends Fragment {
                 BuildConfig.VERSION_CODE
         ));
 
-
+        TextView buildTime = binding.debugBuildTime;
+        buildTime.setText(String.format(
+                buildTime.getText().toString(),
+                BuildConfig.BUILD_TIMESTAMP
+        ));
 
         return root;
     }

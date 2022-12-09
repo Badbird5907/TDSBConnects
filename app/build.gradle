@@ -11,6 +11,10 @@ def getGitHash = { ->
     return stdout.toString().trim()
 }
 
+def getTimestamp = {
+    return new Date().format("M/d/yyyy h:mm:ss a")
+}
+
 android {
     namespace 'dev.badbird.tdsbconnects'
     compileSdk 32
@@ -24,6 +28,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "GIT_HASH", "\"${getGitHash()}\""
+        buildConfigField "String", "BUILD_TIMESTAMP", "\"${getTimestamp()}\""
     }
 
     buildTypes {

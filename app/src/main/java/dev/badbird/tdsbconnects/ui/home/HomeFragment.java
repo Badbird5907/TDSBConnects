@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         TextView nextClassDesc = binding.nextClassCourseDesc;
         TextView nextClassTime = binding.nextClassCourseTime;
         TextView nextClassRoom = binding.nextClassRoom;
-        TDSBConnectsApp.getInstance().getNextCourse(schoolCode).thenAccept(course -> {
+        TDSBConnectsApp.getInstance().getNextCourse(schoolCode, HomeFragment.this.getContext()).thenAccept(course -> {
              getActivity().runOnUiThread(()-> {
                 if (course == null) {
                     nextClassCode.setText(R.string.none);

@@ -35,4 +35,5 @@
     <string name="home_next_class_course_desc">%s</string>
     <string name="home_next_class_course_time">%s - %s</string>
     <string name="home_next_class_room">Room %s</string>
+    <string name="menu_settings">settings</string>
 </resources>

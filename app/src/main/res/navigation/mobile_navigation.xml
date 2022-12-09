@@ -22,4 +22,10 @@
             android:name="dev.badbird.tdsbconnects.ui.slideshow.SlideshowFragment"
             android:label="@string/menu_slideshow"
             tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+            android:id="@+id/nav_settings"
+            android:name="dev.badbird.tdsbconnects.ui.settings.SettingsFragment"
+            android:label="@string/menu_settings"
+            tools:layout="@xml/preferences" />
 </navigation>

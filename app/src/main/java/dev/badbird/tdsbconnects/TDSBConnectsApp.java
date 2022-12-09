@@ -4,11 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.preference.PreferenceManager;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.regex.Pattern;
 
 import dev.badbird.tdsbconnects.data.model.LoggedInUser;
 import dev.badbird.tdsbconnects.ui.home.HomeFragment;
@@ -32,9 +36,11 @@ public class TDSBConnectsApp {
     private TDSBConnectsApp() {
     }
 
+    private static final Pattern SPLIT_PATTERN = Pattern.compile("(,|\\||\\s)+"); // split by , or | or space
     public List<String> getClassCodesToExclude(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences("settings", Context.MODE_PRIVATE);
-        return tdsbConnects.GSON.fromJson(prefs.getString("classCodesToExclude", "[]"), List.class);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        String name = prefs.getString("hide_courses_preference", "");
+        return Arrays.asList(SPLIT_PATTERN.split(name));
     }
 
     public CompletableFuture<LoggedInUser> login(String username, String password) {
@@ -52,6 +58,7 @@ public class TDSBConnectsApp {
 
     @SuppressLint("SimpleDateFormat")
     private static final DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+
     public CompletableFuture<TimeTableResponse.Course[]> getCoursesForDay(Date date, int schoolId, Context context) { // TODO caching, this is very important!
         String dateStr = dateFormat.format(date); // this is so braindead
         TimeTableRequest request = new TimeTableRequest(schoolId, dateStr);

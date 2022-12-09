@@ -1,18 +1,15 @@
 package dev.badbird.tdsbconnects.ui.home;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 import dev.badbird.tdsbconnects.R;
@@ -20,7 +17,6 @@ import dev.badbird.tdsbconnects.TDSBConnectsApp;
 import dev.badbird.tdsbconnects.databinding.FragmentHomeBinding;
 import dev.badbird.tdsbconnects.util.TimeUtils;
 import dev.badbird.tdsbconnectsapi.TDSBConnects;
-import dev.badbird.tdsbconnectsapi.schema.response.impl.TimeTableResponse;
 import dev.badbird.tdsbconnectsapi.schema.response.impl.UserResponse;
 import dev.badbird.tdsbconnectsapi.util.Utilities;
 
@@ -47,16 +43,14 @@ public class HomeFragment extends Fragment {
         textView.setText(String.format(getString(R.string.home_header), school == null ? "Unknown (Failed to fetch, please report)" : school.getSchoolName()));
 
 
-        TextView nextClassCode = binding.nextClassCourseCode;
         TextView nextClassDesc = binding.nextClassCourseDesc;
         TextView nextClassTime = binding.nextClassCourseTime;
         TextView nextClassRoom = binding.nextClassRoom;
         TDSBConnectsApp.getInstance().getNextCourse(schoolCode, HomeFragment.this.getContext()).thenAccept(course -> {
              getActivity().runOnUiThread(()-> {
                 if (course == null) {
-                    nextClassCode.setText(R.string.none);
+                    nextClassDesc.setText(R.string.none);
                 } else {
-                    nextClassCode.setText(course.getStudentCourse().getClassCode());
                     nextClassDesc.setText(course.getStudentCourse().getClassName());
                     nextClassDesc.setVisibility(View.VISIBLE);
 
@@ -72,7 +66,7 @@ public class HomeFragment extends Fragment {
             });
         }).exceptionally(e -> {
             e.printStackTrace();
-            nextClassCode.setText(R.string.error);
+            nextClassDesc.setText(R.string.error);
             return null;
         });
         return root;

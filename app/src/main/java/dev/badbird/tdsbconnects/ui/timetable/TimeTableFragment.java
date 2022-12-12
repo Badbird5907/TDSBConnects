@@ -58,7 +58,7 @@ public class TimeTableFragment extends Fragment {
 
     public void updateWeek() {
         week = new Week(selectedDate);
-        System.out.println("Updated Week - " + week);
+        log.info("Updated Week - " + week);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class TimeTableFragment extends Fragment {
 
     private long selectedDate = System.currentTimeMillis();
     private FragmentTimetableBinding binding;
-    private Week week = new Week(selectedDate);
+    private Week week;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class TimeTableFragment extends Fragment {
 
         binding = FragmentTimetableBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        updateWeek();
         binding.fab.setOnClickListener(view -> openDialog());
 
         return root;

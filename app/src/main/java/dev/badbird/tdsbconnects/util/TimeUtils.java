@@ -8,4 +8,9 @@ public class TimeUtils {
     public static String formatTime(long timestamp) {
         return timeFormat.format(timestamp);
     }
+
+    private static final DateFormat dateFormat = new SimpleDateFormat("MMM dd");
+    public static String formatDate(long date) {
+        return dateFormat.format(date);
+    }
 }

@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
         ).findFirst().orElse(null);
 
         TextView textView = binding.textHome;
-        textView.setText(String.format(getString(R.string.home_header), school == null ? "Unknown (Failed to fetch, please report)" : school.getSchoolName()));
+        textView.setText(getString(R.string.home_header, school == null ? "Unknown (Failed to fetch, please report)" : school.getSchoolName()));
 
 
         TextView nextClassDesc = binding.nextClassCourseDesc;
@@ -54,10 +54,10 @@ public class HomeFragment extends Fragment {
                     long startTimestamp = Utilities.parseDateToUnixMillis(course.getStudentCourse().getStartTime());
                     long endTimestamp = Utilities.parseDateToUnixMillis(course.getStudentCourse().getEndTime());
                     String start = TimeUtils.formatTime(startTimestamp), end = TimeUtils.formatTime(endTimestamp);
-                    nextClassTime.setText(String.format(getString(R.string.home_next_class_course_time), start, end));
+                    nextClassTime.setText(getString(R.string.home_next_class_course_time, start, end));
                     nextClassTime.setVisibility(View.VISIBLE);
 
-                    nextClassRoom.setText(String.format(getString(R.string.home_next_class_room), course.getStudentCourse().getRoomNo()));
+                    nextClassRoom.setText(getString(R.string.home_next_class_room, course.getStudentCourse().getRoomNo()));
                     nextClassRoom.setVisibility(View.VISIBLE);
                 }
             });

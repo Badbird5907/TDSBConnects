@@ -1,25 +1,23 @@
 package dev.badbird.tdsbconnects.ui.timetable;
 
-import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.RangeDateSelector;
 
-import java.util.Calendar;
 import java.util.Date;
 
+import dev.badbird.tdsbconnects.R;
 import dev.badbird.tdsbconnects.databinding.FragmentTimetableBinding;
 import dev.badbird.tdsbconnects.object.Week;
+import dev.badbird.tdsbconnects.util.TimeUtils;
 import lombok.extern.java.Log;
 
 @Log
@@ -58,6 +56,8 @@ public class TimeTableFragment extends Fragment {
 
     public void updateWeek() {
         week = new Week(selectedDate);
+        TextView dateRange = binding.dateRange;
+        dateRange.setText(getString(R.string.timetable_date, TimeUtils.formatDate(week.getStart()), TimeUtils.formatDate(week.getEnd())));
         log.info("Updated Week - " + week);
     }
 

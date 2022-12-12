@@ -39,10 +39,10 @@ public class MainActivity extends AppCompatActivity {
 
         // get the textview with the id nav_header_title
         TextView navHeaderTitle = navigationView.getHeaderView(0).findViewById(R.id.nav_header_title);
-        navHeaderTitle.setText(String.format(getString(R.string.nav_header_title), TDSBConnectsApp.getInstance().getTdsbConnects().getUserData().getUserName()));
+        navHeaderTitle.setText(getString(R.string.nav_header_title, TDSBConnectsApp.getInstance().getTdsbConnects().getUserData().getUserName()));
 
         TextView navHeaderSubtitle = navigationView.getHeaderView(0).findViewById(R.id.nav_header_subtitle);
-        navHeaderSubtitle.setText(String.format(getString(R.string.nav_header_subtitle), TDSBConnectsApp.getInstance().getTdsbConnects().getUsername()));
+        navHeaderSubtitle.setText(getString(R.string.nav_header_subtitle, TDSBConnectsApp.getInstance().getTdsbConnects().getUsername()));
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

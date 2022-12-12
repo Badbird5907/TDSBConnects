@@ -2,10 +2,11 @@ package dev.badbird.tdsbconnects.object;
 
 import java.util.Calendar;
 
-public class Week {
-    private long start;
-    private long end;
+import lombok.Getter;
 
+public class Week {
+    @Getter
+    private long start, end;
 
     public Week(long start, long end) {
         this.start = start;

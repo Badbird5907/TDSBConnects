@@ -1,5 +1,6 @@
 package dev.badbird.tdsbconnects.ui.home;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import java.util.stream.Stream;
 
@@ -31,6 +34,26 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        CardView nextClassCard = binding.homeNextClass;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        if (prefs.getBoolean("show_next_class_preference", true)) {
+            nextClassCard.setVisibility(View.VISIBLE);
+        } else {
+            nextClassCard.setVisibility(View.GONE);
+        }
+        CardView timeTableCard = binding.homeTimeTable;
+        if (prefs.getBoolean("show_timetable_preference", true)) {
+            timeTableCard.setVisibility(View.VISIBLE);
+        } else {
+            timeTableCard.setVisibility(View.GONE);
+        }
+        CardView schoolCard = binding.homeHeader;
+        if (prefs.getBoolean("show_school_preference", true)) {
+            schoolCard.setVisibility(View.VISIBLE);
+        } else {
+            schoolCard.setVisibility(View.GONE);
+        }
+
         TDSBConnects api = TDSBConnectsApp.getInstance().getTdsbConnects();
         UserResponse.SchoolList school = Stream.of(api.getUserData().getSchoolList()).filter(
                 s -> s.getSchoolCode() == schoolCode
@@ -38,7 +61,6 @@ public class HomeFragment extends Fragment {
 
         TextView textView = binding.textHome;
         textView.setText(getString(R.string.home_header, school == null ? "Unknown (Failed to fetch, please report)" : school.getSchoolName()));
-
 
         TextView nextClassDesc = binding.nextClassCourseDesc;
         TextView nextClassTime = binding.nextClassCourseTime;

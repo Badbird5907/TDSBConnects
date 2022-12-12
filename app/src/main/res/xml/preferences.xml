@@ -11,13 +11,30 @@
         app:title="Send feedback"
         app:summary="Report technical issues or suggest new features"/>
         -->
+    <PreferenceCategory android:title="Home Page">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="show_school_preference"
+            android:title="Show School" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="show_next_class_preference"
+            android:title="Show Next Class" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="show_timetable_preference"
+            android:title="Show Time Table" />
+    </PreferenceCategory>
 
 
-    <EditTextPreference
-        android:defaultValue="Default value"
-        android:key="hide_courses_preference"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Edit Hidden Courses" />
+
+    <PreferenceCategory android:title="Other">
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="hide_courses_preference"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Edit Hidden Courses" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

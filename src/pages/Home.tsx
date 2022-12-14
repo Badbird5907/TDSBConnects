@@ -1,10 +1,11 @@
+import {Box} from 'native-base';
 import * as React from 'react';
-import {Text, View} from 'react-native';
+import {Text} from 'react-native';
 
 export default function HomeScreen() {
     return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text style={{color: 'black'}}>Home Screen</Text>
-        </View>
+        <Box flex={1} bg="#fff" alignItems="center" justifyContent="center">
+            <Text>Open up App.js to start working on your app!</Text>
+        </Box>
     );
 }

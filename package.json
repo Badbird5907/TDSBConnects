@@ -12,10 +12,13 @@
   "dependencies": {
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/native-stack": "^6.9.6",
+    "native-base": "^3.4.25",
     "react": "18.1.0",
     "react-native": "0.70.6",
-    "react-native-safe-area-context": "^4.4.1",
-    "react-native-screens": "^3.18.2"
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-screens": "^3.18.2",
+    "react-native-svg": "^12.1.1",
+    "tdsb-connects-api": "^1.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

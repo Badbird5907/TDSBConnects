@@ -1,92 +1,55 @@
-import {StyleSheet, useColorScheme} from 'react-native';
+import 'react-native-gesture-handler';
+
 import React from "react";
-import {
-  Box, Button,
-  Center,
-  extendTheme,
-  FormControl,
-  Heading, HStack,
-  Input,
-  Link,
-  NativeBaseProvider,
-  Text,
-  VStack
-} from "native-base";
-import {BackgroundColor} from "@bacons/expo-background-color";
+import {NativeBaseProvider, StatusBar, useColorMode} from "native-base";
+import {customTheme, DARK_BACKGROUND, LIGHT_BACKGROUND} from "./src/theme";
+import {SafeAreaProvider} from "react-native-safe-area-context";
+import Login from "./src/pages/Login";
+import {createStackNavigator} from "@react-navigation/stack";
+import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
+import Home from "./src/pages/Home";
+import {NavigationContainer} from '@react-navigation/native';
+import * as Sentry from "@sentry/react-native";
 
-// Define the config
-const config = {
-  useSystemColorMode: true,
-};
+const Stack = createStackNavigator();
+function App() {
+    const colorMode = useColorScheme();
+    const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
 
-// extend the theme
-const customTheme = extendTheme({ config });
-export default function App() {
-  //const colorScheme = useColorScheme();
-  return (
-      <NativeBaseProvider theme={customTheme}>
-        {/*useColorScheme() && <BackgroundColor color="#000" />*/}
-        <Example />
-      </NativeBaseProvider>
-  );
+
+    Sentry.init({ // Sentry is a crash/error reporting tool - https://sentry.io/
+        dsn: "https://9a4d6f697d8548f3bcdbdc096e139265@o1085784.ingest.sentry.io/4504329084600320",
+        // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+        // We recommend adjusting this value in production.
+        tracesSampleRate: 1.0,
+    });
+
+    return (
+        <NativeBaseProvider theme={customTheme}>
+            <NavigationContainer>
+                <SafeAreaProvider>
+                    <SafeAreaView style={[styles.container, {backgroundColor: bgColor}]}>
+                        <StatusBar
+                            barStyle={colorMode === 'dark' ? 'light-content' : 'dark-content'}
+                            translucent
+                            backgroundColor="transparent"
+                        />
+                        <Stack.Navigator>
+                            <Stack.Screen name="Login" component={Login} options={{
+                                headerShown: false,
+                            }}/>
+                            <Stack.Screen name="Home" component={Home}/>
+                        </Stack.Navigator>
+                    </SafeAreaView>
+                </SafeAreaProvider>
+            </NavigationContainer>
+        </NativeBaseProvider>
+    );
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        flex: 1,
+    },
 });
-const Example = () => {
-  return <Center w="100%">
-    <Box safeArea p="2" py="8" w="90%" maxW="290">
-      <Heading size="lg" fontWeight="600" color="coolGray.800" _dark={{
-        color: "warmGray.50"
-      }}>
-        Welcome
-      </Heading>
-      <Heading mt="1" _dark={{
-        color: "warmGray.200"
-      }} color="coolGray.600" fontWeight="medium" size="xs">
-        Sign in to continue!
-      </Heading>
 
-      <VStack space={3} mt="5">
-        <FormControl>
-          <FormControl.Label>Email ID</FormControl.Label>
-          <Input />
-        </FormControl>
-        <FormControl>
-          <FormControl.Label>Password</FormControl.Label>
-          <Input type="password" />
-          <Link _text={{
-            fontSize: "xs",
-            fontWeight: "500",
-            color: "indigo.500"
-          }} alignSelf="flex-end" mt="1">
-            Forget Password?
-          </Link>
-        </FormControl>
-        <Button mt="2" colorScheme="indigo">
-          Sign in
-        </Button>
-        <HStack mt="6" justifyContent="center">
-          <Text fontSize="sm" color="coolGray.600" _dark={{
-            color: "warmGray.200"
-          }}>
-            I'm a new user.{" "}
-          </Text>
-          <Link _text={{
-            color: "indigo.500",
-            fontWeight: "medium",
-            fontSize: "sm"
-          }} href="#">
-            Sign Up
-          </Link>
-        </HStack>
-      </VStack>
-    </Box>
-  </Center>;
-};
+export default Sentry.wrap(App);

@@ -3,7 +3,7 @@ import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Box, Divider, HStack, Icon, Pressable, Text, VStack,} from "native-base";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND} from "../theme";
-import APIService, {userInfo} from "../services/APIService";
+import {userInfo} from "../services/APIService";
 import {useColorScheme} from "react-native";
 
 const getIcon = (screenName: string) => {
@@ -17,7 +17,7 @@ const getIcon = (screenName: string) => {
     }
 };
 
-const hiddenRoutes = ['Login']
+const hiddenRoutes = ['Login', 'Settings']
 
 export default function CustomDrawer(props: any) {
     const colorMode = useColorScheme();
@@ -85,14 +85,22 @@ export default function CustomDrawer(props: any) {
                             Actions
                         </Text>
                         <VStack space="3">
-                            <Pressable px="5" py="3">
+                            <Pressable px="5" py="3" onPress={(event) => {
+                                props.navigation.navigate('Settings');
+                            }} bg={props.state.routeNames[props.state.index] === 'Settings' ? "rgba(6, 182, 212, 0.1)" : "transparent"}
+                                       rounded="md"
+                            >
                                 <HStack space="7" alignItems="center">
                                     <Icon
-                                        color={textColor}
                                         size="5"
                                         as={<MaterialCommunityIcons name="cogs"/>}
+                                        color={
+                                            props.state.routeNames[props.state.index] === 'Settings' ? "primary.500" : textColor
+                                        }
                                     />
-                                    <Text style={{color: textColor}} fontWeight="500">
+                                    <Text fontWeight="500" color={
+                                        props.state.routeNames[props.state.index] === 'Settings' ? "primary.500" : textColor
+                                    }>
                                         Settings
                                     </Text>
                                 </HStack>

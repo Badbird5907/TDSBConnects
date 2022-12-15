@@ -1,10 +1,9 @@
 import 'react-native-gesture-handler';
 
 import React from "react";
-import {NativeBaseProvider, StatusBar, useColorMode} from "native-base";
+import {NativeBaseProvider, StatusBar} from "native-base";
 import {customTheme, DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "./src/theme";
 import {SafeAreaProvider} from "react-native-safe-area-context";
-import Login from "./src/pages/Login";
 import {SafeAreaView, useColorScheme} from "react-native";
 import Home from "./src/pages/Home";
 import {NavigationContainer} from '@react-navigation/native';
@@ -12,6 +11,8 @@ import * as Sentry from "sentry-expo";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import CustomDrawer from "./src/components/CustomDrawer";
 import TimeTable from "./src/pages/TimeTable";
+import Settings from "./src/pages/Settings";
+import Login from "./src/pages/Login";
 
 const Drawer = createDrawerNavigator();
 
@@ -66,6 +67,7 @@ function AppDrawer() {
             {/* Note to future self, hide items in CustomDrawer.hiddenRoutes x*/}
             <Drawer.Screen name="Home" component={Home} options={stackOptions}/>
             <Drawer.Screen name="Time Table" component={TimeTable} options={stackOptions}/>
+            <Drawer.Screen name="Settings" component={Settings} options={stackOptions}/>
             <Drawer.Screen name="Login" component={Login} options={{
                 headerShown: false,
                 swipeEnabled: false,

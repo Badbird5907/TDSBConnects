@@ -13,6 +13,16 @@ class CredentialsService {
         await SecureStore.setItemAsync('username', username);
         await SecureStore.setItemAsync('password', password);
     }
+
+    async clearCredentials() {
+        await SecureStore.deleteItemAsync('username');
+        await SecureStore.deleteItemAsync('password');
+    }
+    async hasCredentials() {
+        const username = await SecureStore.getItemAsync('username');
+        const password = await SecureStore.getItemAsync('password');
+        return username && password;
+    }
 }
 
 export default new CredentialsService();

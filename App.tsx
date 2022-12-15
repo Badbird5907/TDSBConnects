@@ -1,21 +1,22 @@
 import 'react-native-gesture-handler';
 
-import React from "react";
-import {NativeBaseProvider, StatusBar, useColorMode} from "native-base";
+import React, {useEffect} from "react";
+import {NativeBaseProvider, StatusBar} from "native-base";
 import {customTheme, DARK_BACKGROUND, LIGHT_BACKGROUND} from "./src/theme";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import Login from "./src/pages/Login";
-import {createStackNavigator} from "@react-navigation/stack";
 import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
 import Home from "./src/pages/Home";
 import {NavigationContainer} from '@react-navigation/native';
 import * as Sentry from "sentry-expo";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import APIService, {userInfo} from "./src/services/APIService";
+import {createStackNavigator} from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 function App() {
     const colorMode = useColorScheme();
     const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
-
 
     // TODO fix Event was skipped as native SDK is not enabled.
     Sentry.init({ // Sentry is a crash/error reporting tool - https://sentry.io/
@@ -38,10 +39,11 @@ function App() {
                             backgroundColor="transparent"
                         />
                         <Stack.Navigator>
+                            <Stack.Screen name="Home" component={Home} options={{}}/>
                             <Stack.Screen name="Login" component={Login} options={{
                                 headerShown: false,
+                                headerLeft: undefined
                             }}/>
-                            <Stack.Screen name="Home" component={Home}/>
                         </Stack.Navigator>
                     </SafeAreaView>
                 </SafeAreaProvider>

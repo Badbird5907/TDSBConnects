@@ -2,7 +2,7 @@ import {Box, Button, Center, Checkbox, FormControl, Heading, Input, StatusBar, u
 import React, {useEffect} from "react";
 import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND} from "../theme";
-import APIService from "../services/APIService";
+import APIService, {cachedInfoSuccess} from "../services/APIService";
 import CredentialsService from "../services/CredentialsService";
 
 export default function Login({navigation}: any) {
@@ -16,6 +16,11 @@ export default function Login({navigation}: any) {
     const [saveLogin, setSaveLogin] = React.useState(true);
 
     useEffect(()=> {
+        console.log('preinit cache info success', cachedInfoSuccess)
+        if (cachedInfoSuccess) {
+            navigation.navigate('Home');
+        }
+        if (1 + 1 === 2) return // TODO remove this
         CredentialsService.getCredentials().then(creds => {
             if (creds) {
                 const {username, password} = creds;

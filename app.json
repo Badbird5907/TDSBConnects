@@ -29,6 +29,21 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "sentry-expo"
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "badbird5907",
+            "project": "tdsb-connects",
+            "authToken": "SENTRY_AUTH_TOKEN"
+          }
+        }
+      ]
     }
   }
 }

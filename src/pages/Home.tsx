@@ -1,6 +1,8 @@
 import React from 'react';
 import {Text, useToast} from "native-base";
 
+import * as Sentry from "sentry-expo";
+
 import {
     Button
 } from "native-base";
@@ -14,7 +16,11 @@ const Home = () => {
                 toast.show({
                     title: "Triggering error",
                 });
-                throw new Error("Test Error");
+                try {
+                    throw new Error("Test Error");
+                }catch (e) {
+                    Sentry.Native.captureException(e);
+                }
             }}>Trigger Sentry Error</Button>
         </>
     );

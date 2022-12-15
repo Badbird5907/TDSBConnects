@@ -1,8 +1,9 @@
-import {Box, Button, Center, FormControl, Heading, Input, StatusBar, useToast, VStack} from "native-base";
-import React from "react";
+import {Box, Button, Center, Checkbox, FormControl, Heading, Input, StatusBar, useToast, VStack} from "native-base";
+import React, {useEffect} from "react";
 import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND} from "../theme";
 import APIService from "../services/APIService";
+import CredentialsService from "../services/CredentialsService";
 
 export default function Login({navigation}: any) {
     const colorMode = useColorScheme();
@@ -12,6 +13,64 @@ export default function Login({navigation}: any) {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [loggingIn, setLoggingIn] = React.useState(false);
+    const [saveLogin, setSaveLogin] = React.useState(true);
+
+    useEffect(()=> {
+        CredentialsService.getCredentials().then(creds => {
+            if (creds) {
+                const {username, password} = creds;
+                if (!username || !password) {
+                    console.log("No credentials found!");
+                    return;
+                }
+                login(username, password);
+                setLoggingIn(false)
+            }
+        });
+    }, [])
+
+    function login(username: string, password: string) {
+        setLoggingIn(true);
+        const starredPassword = password.replace(/./g, '*');
+        console.log("Logging in with username: " + username + " and password: " + starredPassword);
+        APIService.init(username, password).then((res) => {
+            console.log("Logged in successfully!", res);
+            setLoggingIn(false);
+            if (saveLogin) {
+                CredentialsService.saveCredentials(username, password).then(()=> {
+                    console.log("Successfully saved credentials!");
+                    CredentialsService.getCredentials().then(creds => {
+                        console.log("Credentials: ", creds);
+                    });
+                });
+            }
+            toast.show({
+                title: "Logged in successfully!",
+                description: "Login successful!",
+                duration: 2500,
+                render: () => {
+                    return <Box bg="green.500" px="2" py="1" rounded="sm" mb={5}>
+                        Login successful!
+                    </Box>;
+                }
+            });
+            navigation.navigate('Home');
+        }).catch((err) => {
+            setLoggingIn(false);
+
+            toast.show({
+                title: "Error",
+                description: err,
+                variant: "solid",
+                duration: 2500,
+                render: () => {
+                    return <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
+                        Failed to login!
+                    </Box>;
+                }
+            })
+        });
+    }
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: bgColor}]}>
@@ -45,40 +104,15 @@ export default function Login({navigation}: any) {
                             <FormControl.Label>Password</FormControl.Label>
                             <Input type="password" cursorColor={"white"} onChange={(v) => {
                                 setPassword(v.nativeEvent.text)
-                            }}/>
+                            }} autoCapitalize={"none"}/>
                         </FormControl>
-                        <Button mt="2" colorScheme="indigo" disabled={loggingIn} onPress={(e) => {
-                            setLoggingIn(true);
-                            const starredPassword = password.replace(/./g, '*');
-                            console.log("Logging in with username: " + username + " and password: " + starredPassword);
-                            APIService.init(username, password).then((res) => {
-                                console.log("Logged in successfully!", res);
-                                setLoggingIn(false);
-                                toast.show({
-                                    title: "Logged in successfully!",
-                                    description: "Login successful!",
-                                    duration: 2500,
-                                    render: () => {
-                                        return <Box bg="green.500" px="2" py="1" rounded="sm" mb={5}>
-                                            Login successful!
-                                        </Box>;
-                                    }
-                                });
-                                navigation.navigate('Home');
-                            }).catch((err) => {
-                                setLoggingIn(false);
-                                toast.show({
-                                    title: "Error",
-                                    description: err,
-                                    variant: "solid",
-                                    duration: 2500,
-                                    render: () => {
-                                        return <Box bg="red.500" px="2" py="1" rounded="sm" mb={5}>
-                                            {err}
-                                        </Box>;
-                                    }
-                                })
-                            });
+                        <Checkbox isChecked={saveLogin} onChange={(bool) => {
+                            setSaveLogin(bool)
+                        }} colorScheme="indigo" value={"save"}>
+                            Save Credentials
+                        </Checkbox>
+                        <Button mt="2" colorScheme="indigo" isDisabled={loggingIn} onPress={(e) => {
+                            login(username, password)
                         }}>
                             Sign in
                         </Button>

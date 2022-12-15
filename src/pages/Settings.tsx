@@ -5,6 +5,7 @@ import {DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "../theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Settings = ({navigation}: any) => {
+    // TODO: use less of the stuff below and concatenate the edit buttons into one component with modifiable props
     const colorMode = useColorScheme();
     const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
     const [openHiddenClasses, setOpenHiddenClasses] = React.useState(false);

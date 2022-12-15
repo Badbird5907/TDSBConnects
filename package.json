@@ -33,7 +33,7 @@
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.9",
     "sentry-expo": "~6.0.0",
-    "tdsb-connects-api": "^1.1.6",
+    "tdsb-connects-api": "^1.1.8",
     "url": "^0.11.0"
   },
   "devDependencies": {

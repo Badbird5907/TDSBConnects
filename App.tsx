@@ -1,23 +1,23 @@
 import 'react-native-gesture-handler';
 
-import React, {useEffect} from "react";
-import {NativeBaseProvider, StatusBar} from "native-base";
-import {customTheme, DARK_BACKGROUND, LIGHT_BACKGROUND} from "./src/theme";
+import React from "react";
+import {NativeBaseProvider, StatusBar, useColorMode} from "native-base";
+import {customTheme, DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "./src/theme";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import Login from "./src/pages/Login";
-import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
+import {SafeAreaView, useColorScheme} from "react-native";
 import Home from "./src/pages/Home";
 import {NavigationContainer} from '@react-navigation/native';
 import * as Sentry from "sentry-expo";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import APIService, {userInfo} from "./src/services/APIService";
-import {createStackNavigator} from "@react-navigation/stack";
+import {createDrawerNavigator} from "@react-navigation/drawer";
+import CustomDrawer from "./src/components/CustomDrawer";
+import TimeTable from "./src/pages/TimeTable";
 
-const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
 function App() {
     const colorMode = useColorScheme();
     const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
-
     // TODO fix Event was skipped as native SDK is not enabled.
     Sentry.init({ // Sentry is a crash/error reporting tool - https://sentry.io/
         dsn: "https://9a4d6f697d8548f3bcdbdc096e139265@o1085784.ingest.sentry.io/4504329084600320",
@@ -27,7 +27,6 @@ function App() {
         //debug: true,
         //enableInExpoDevelopment: true
     });
-
     return (
         <NativeBaseProvider theme={customTheme}>
             <NavigationContainer>
@@ -38,23 +37,39 @@ function App() {
                             translucent
                             backgroundColor="transparent"
                         />
-                        <Stack.Navigator>
-                            <Stack.Screen name="Home" component={Home} options={{}}/>
-                            <Stack.Screen name="Login" component={Login} options={{
-                                headerShown: false,
-                                headerLeft: undefined
-                            }}/>
-                        </Stack.Navigator>
+                        <AppDrawer/>
                     </SafeAreaView>
                 </SafeAreaProvider>
             </NavigationContainer>
         </NativeBaseProvider>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});
 
 export default Sentry.Native.wrap(App);
+
+function AppDrawer() {
+    const colorMode = useColorScheme();
+    const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
+    const stackOptions = {
+        headerStyle: {
+            backgroundColor: bgColor,
+        },
+        headerTitleStyle: {
+            color: colorMode === 'dark' ? 'white' : 'black',
+        }
+    }
+    return (
+        <Drawer.Navigator initialRouteName={"Home"} screenOptions={{
+            headerTintColor: colorMode === 'dark' ? 'white' : 'black',
+        }} drawerContent={(props) => <CustomDrawer {...props} />}
+        >
+            {/* Note to future self, hide items in CustomDrawer.hiddenRoutes x*/}
+            <Drawer.Screen name="Home" component={Home} options={stackOptions}/>
+            <Drawer.Screen name="Time Table" component={TimeTable} options={stackOptions}/>
+            <Drawer.Screen name="Login" component={Login} options={{
+                headerShown: false,
+                swipeEnabled: false,
+            }}/>
+        </Drawer.Navigator>
+    )
+}

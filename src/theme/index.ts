@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {extendTheme} from 'native-base';
-import {useColorScheme} from "react-native";
+import {StyleSheet, useColorScheme} from "react-native";
 export const customTheme = extendTheme({
     colors: {
         black: {
@@ -29,9 +29,16 @@ export const customTheme = extendTheme({
         },
     },
     config: {
-        initialColorMode: 'dark',
+        useSystemColorMode: true
     }
 });
 
 export const DARK_BACKGROUND = '#2c2c2c';
 export const LIGHT_BACKGROUND = '#ffffff';
+
+
+export const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});

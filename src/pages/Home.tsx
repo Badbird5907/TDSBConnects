@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, useToast} from "native-base";
+import {Text, useColorMode, useToast} from "native-base";
 
 import * as Sentry from "sentry-expo";
 
@@ -8,8 +8,12 @@ import {
 } from "native-base";
 import APIService, {userInfo, cachedInfoSuccess, firstTime} from "../services/APIService";
 import CredentialsService from "../services/CredentialsService";
+import {SafeAreaView, useColorScheme} from "react-native";
+import {DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "../theme";
 
 const Home = ({ navigation }: any) => {
+    const colorMode = useColorScheme();
+    const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
     const toast = useToast();
 
     const [data, setData] = React.useState(null);
@@ -22,7 +26,7 @@ const Home = ({ navigation }: any) => {
                 APIService.preInit().then(res => {
                     //console.log('Preinit res', userInfo)
                     if (res) {
-                        console.log('Found cached data and logged in successfully!');
+                        console.log('Found cached data!');
                         CredentialsService.getCredentials().then(creds => {
                             if (creds) {
                                 const {username, password} = creds;
@@ -56,20 +60,18 @@ const Home = ({ navigation }: any) => {
 
     },[]);
 
+    const c = useColorMode();
+
     return (
-        <>
+        <SafeAreaView style={[styles.container, {backgroundColor: bgColor}]}>
             <Text>Home</Text>
             <Button onPress={()=> {
                 toast.show({
-                    title: "Triggering error",
+                    title: c.colorMode,
                 });
-                try {
-                    throw new Error("Test Error");
-                }catch (e) {
-                    Sentry.Native.captureException(e);
-                }
-            }}>Trigger Sentry Error</Button>
-        </>
+                console.log('Color mode: ', c)
+            }}>Show color mode</Button>
+        </SafeAreaView>
     );
 };
 

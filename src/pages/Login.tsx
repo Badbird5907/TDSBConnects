@@ -1,7 +1,7 @@
 import {Box, Button, Center, Checkbox, FormControl, Heading, Input, StatusBar, useToast, VStack} from "native-base";
 import React, {useEffect} from "react";
 import {SafeAreaView, StyleSheet, useColorScheme} from "react-native";
-import {DARK_BACKGROUND, LIGHT_BACKGROUND} from "../theme";
+import {DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "../theme";
 import APIService, {cachedInfoSuccess} from "../services/APIService";
 import CredentialsService from "../services/CredentialsService";
 
@@ -128,8 +128,3 @@ export default function Login({navigation}: any) {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-});

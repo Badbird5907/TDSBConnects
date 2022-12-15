@@ -20,7 +20,7 @@ const Home = ({ navigation }: any) => {
         CredentialsService.hasCredentials().then((hasCreds) => {
             if (hasCreds) {
                 APIService.preInit().then(res => {
-                    console.log('Preinit res', userInfo)
+                    //console.log('Preinit res', userInfo)
                     if (res) {
                         console.log('Found cached data and logged in successfully!');
                         CredentialsService.getCredentials().then(creds => {

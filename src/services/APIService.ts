@@ -15,7 +15,7 @@ class APIService {
         firstTime = false;
         const cachedInfo = await AsyncStorage.getItem('cachedData');
         const savedCredentials = await CredentialsService.getCredentials();
-        console.log('Cached stuff: ', cachedInfo, savedCredentials);
+        //console.log('Cached stuff: ', cachedInfo, savedCredentials);
         if (cachedInfo && savedCredentials) {
             cachedInfoSuccess = true;
             const thing = plainToInstance(UserResponse, JSON.parse(cachedInfo));

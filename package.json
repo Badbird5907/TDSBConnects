@@ -10,6 +10,7 @@
   "dependencies": {
     "@bacons/expo-background-color": "^1.0.2",
     "@react-native-async-storage/async-storage": "~1.17.3",
+    "@react-native-community/datetimepicker": "6.5.2",
     "@react-navigation/drawer": "^6.5.5",
     "@react-navigation/stack": "^6.3.9",
     "class-transformer": "^0.5.1",
@@ -33,7 +34,7 @@
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.9",
     "sentry-expo": "~6.0.0",
-    "tdsb-connects-api": "^1.1.8",
+    "tdsb-connects-api": "^1.2.2",
     "url": "^0.11.0"
   },
   "devDependencies": {

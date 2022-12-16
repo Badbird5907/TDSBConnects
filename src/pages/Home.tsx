@@ -38,6 +38,8 @@ const Home = ({ navigation }: any) => {
                                 APIService.init(username, password).then((res) => {
                                     if (res) {
                                         console.log("Logged in successfully!");
+                                        APIService.cacheTodayTimeTable()
+
                                     } else {
                                         console.log("Failed to log in! Redirecting to login page...");
                                         CredentialsService.clearCredentials().then(() => {

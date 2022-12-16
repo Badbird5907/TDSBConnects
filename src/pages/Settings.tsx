@@ -52,6 +52,7 @@ function HiddenClassesModal(props: any) {
 
     const initialRef = React.useRef(null);
     const finalRef = React.useRef(null);
+    const colorScheme = useColorScheme()
     const handleClose = () => {
         props.onClose();
     }
@@ -69,7 +70,7 @@ function HiddenClassesModal(props: any) {
                             <FormControl.Label>Classes</FormControl.Label>
                             <Input ref={initialRef} onChange={(e) => {
                                 setHiddenClasses(e.nativeEvent.text);
-                            }} defaultValue={props.initialValue}/>
+                            }} defaultValue={props.initialValue} cursorColor={colorScheme === 'dark' ? 'white' : 'black'}/>
                         </FormControl>
                     </Modal.Body>
                     <Modal.Footer>

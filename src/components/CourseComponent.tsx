@@ -1,10 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Heading, HStack, Spacer, Stack, Text, VStack} from "native-base";
 import {Course, StudentCourse} from "tdsb-connects-api/build/main/lib/schema/impl/timetable";
+import {formatDate, momentToTime} from "../utils";
 
 const CourseComponent = (props: any) => {
     const item: Course = props.item;
     const studentCourse: StudentCourse = item.studentCourse;
+
+    //const startTime = formatDate(studentCourse.startTime);
+    //const endTime = formatDate(studentCourse.endTime);
+
+    const [startTime, setStartTime] = useState<any>()
+    const [endTime, setEndTime] = useState<any>()
+
+    useEffect(() => {
+        setStartTime(momentToTime(formatDate(studentCourse.startTime)))
+        setEndTime(momentToTime(formatDate(studentCourse.endTime)))
+    }, [studentCourse])
+
     return (
         <>
             <Box alignItems="center" style={{
@@ -24,12 +37,12 @@ const CourseComponent = (props: any) => {
                             <Heading size="md" ml="-1">
                                 {studentCourse.className}
                             </Heading>
-                            <Text fontSize="xs" fontWeight="500" ml="-0.5" mt="-1">
+                            <Text fontSize={"md"} fontWeight="500" ml="-0.5" mt="-1" marginTop={1}>
                                 {studentCourse.classCode}
                             </Text>
                         </Stack>
                         <Text fontWeight="400">
-
+                            {startTime} - {endTime} | {studentCourse.teacherName}
                         </Text>
                     </Stack>
                 </Box>

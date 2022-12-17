@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CredentialsService from "./CredentialsService";
 import {instanceToPlain, plainToInstance} from "class-transformer";
 import {TimeTableRequest, TimetableResponse} from "tdsb-connects-api/build/main/lib/schema/impl/timetable";
+import {formatSmallDate} from "../utils";
 
 
 let tdsbConnects: TDSBConnectsAPI;
@@ -12,7 +13,7 @@ let cachedInfoSuccess: boolean = false;
 let firstTime: boolean = true;
 
 let cachedTimeTable: TimetableResponse;
-let cachedTimeTableTimestamp: number;
+let cachedTimeTableDate: number, cachedTimeTableMonth: number, cachedTimeTableYear: number;
 
 class APIService {
     async preInit() {
@@ -59,7 +60,7 @@ class APIService {
         if (cachedTimeTable) {
             // check if cachedTimeTable is from today
             const today = new Date();
-            if (cachedTimeTableTimestamp > today.setHours(0, 0, 0, 0)) {
+            if (cachedTimeTable && cachedTimeTableDate === date.getDate() && cachedTimeTableMonth === date.getMonth() && cachedTimeTableYear === date.getFullYear()) {
                 console.log('Returning cached timetable');
                 return new Promise((resolve, reject) => {
                     resolve(cachedTimeTable);
@@ -71,10 +72,7 @@ class APIService {
                 reject('Not logged in');
             });
         }
-        const year = date.getFullYear();
-        const month = date.getMonth() + 1;
-        const day = date.getDate();
-        const dateStr = `${day}${month}${year}`
+        const dateStr = formatSmallDate(date);
         return new Promise((resolve, reject) => {
             console.log('School id: ', this.getSchoolId())
             tdsbConnects.call(new TimeTableRequest(this.getSchoolId() + '', dateStr)).then((response) => {
@@ -102,12 +100,14 @@ class APIService {
 
     async cacheTodayTimeTable() { // TODO: overhaul this caching system
         const now = new Date();
-        if (cachedTimeTableTimestamp > now.setHours(0, 0, 0, 0)) {
+        if (cachedTimeTable && cachedTimeTableDate === now.getDate() && cachedTimeTableMonth === now.getMonth() && cachedTimeTableYear === now.getFullYear()) {
             console.log('Already cached today\'s timetable!');
             return;
         }
         console.log('Caching today\'s timetable');
-        cachedTimeTableTimestamp = Date.now();
+        cachedTimeTableDate = now.getDate();
+        cachedTimeTableMonth = now.getMonth();
+        cachedTimeTableYear = now.getFullYear();
         this.getTimeTable(now).then((response) => {
             cachedTimeTable = response;
             console.log('Cached today\'s timetable!');

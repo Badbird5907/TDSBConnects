@@ -15,8 +15,10 @@ const TimeTable = () => {
     const [show, setShow] = useState(false);
 
     const [data, setData] = useState<Course[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        console.log('Updating timetable based on date', date);
         update()
     }, [date]);
 
@@ -41,8 +43,10 @@ const TimeTable = () => {
 
     const update = () => {
         console.log('Update', date);
+        setLoading(true)
         APIService.getTimeTable(date).then((res) => {
             const timetable = res.courseTable;
+            setLoading(false)
             console.log('Time Table0: ', JSON.stringify(timetable));
             setData(timetable);
         })
@@ -60,10 +64,11 @@ const TimeTable = () => {
                     />
                 </>
             )}
-
-            <FlatList data={data} renderItem={({item}) =>
-                <CourseComponent item={item}/>
-            } keyExtractor={item => item.courseKey}/>
+            {loading ? <Text>Loading...</Text> :
+                <FlatList data={data} renderItem={({item}) =>
+                    <CourseComponent item={item}/>
+                } keyExtractor={item => item.courseKey}/>
+            }
 
             <Fab renderInPortal={false} shadow={2} size="sm"
                  icon={<Icon color="white" as={<MaterialCommunityIcons name={"calendar"}/>} name="plus" size="sm"/>}

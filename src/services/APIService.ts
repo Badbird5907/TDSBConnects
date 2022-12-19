@@ -11,10 +11,12 @@ import {demoTimeTable} from "../utils/demo";
 let tdsbConnects: TDSBConnectsAPI;
 let userInfo: UserResponse;
 let cachedInfoSuccess: boolean = false;
-let firstTime: boolean = true;
+let firstTime: boolean = true as boolean;
 
 let cachedTimeTable: TimetableResponse;
-let cachedTimeTableDate: number, cachedTimeTableMonth: number, cachedTimeTableYear: number;
+let cachedTimeTableDate: number,
+    cachedTimeTableMonth: number,
+    cachedTimeTableYear: number;
 
 class APIService {
     async preInit() {
@@ -119,8 +121,24 @@ class APIService {
             console.log('Cached today\'s timetable!');
         });
     }
+
+    async clearData() { // lmfao the ts ignores below
+        await AsyncStorage.removeItem('cachedData');
+        // @ts-ignore
+        userInfo = undefined;
+        cachedInfoSuccess = false;
+        // @ts-ignore
+        cachedTimeTable = undefined;
+        // @ts-ignore
+        cachedTimeTableDate = undefined;
+        // @ts-ignore
+        cachedTimeTableMonth = undefined;
+        // @ts-ignore
+        cachedTimeTableYear = undefined;
+        firstTime = true;
+    }
 }
 
 export default new APIService();
 
-export {userInfo, cachedInfoSuccess, firstTime};
+export {userInfo, cachedInfoSuccess, firstTime, tdsbConnects};

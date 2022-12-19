@@ -3,11 +3,12 @@ import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Box, Divider, HStack, Icon, Pressable, Text, VStack,} from "native-base";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND} from "../theme";
-import {userInfo} from "../services/APIService";
+import APIService, {tdsbConnects, userInfo} from "../services/APIService";
 import {useColorScheme} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {demoUserId, demoUserName} from "../utils/demo";
 import {usernameUpdate} from "../pages/Settings";
+import CredentialsService from "../services/CredentialsService";
 
 const getIcon = (screenName: string) => {
     switch (screenName) {
@@ -130,7 +131,9 @@ export default function CustomDrawer(props: any) {
                                     </Text>
                                 </HStack>
                             </Pressable>
-                            <Pressable px="5" py="3">
+                            <Pressable px="5" py="3" onPress={(event) => {
+                                logout(props)
+                            }}>
                                 <HStack space="7" alignItems="center">
                                     <Icon
                                         color={textColor}
@@ -148,4 +151,10 @@ export default function CustomDrawer(props: any) {
             </VStack>
         </DrawerContentScrollView>
     );
+}
+async function logout(props: any) {
+    await CredentialsService.clearCredentials();
+    await APIService.clearData()
+
+    props.navigation.navigate('Login');
 }

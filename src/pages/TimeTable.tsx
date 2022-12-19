@@ -11,7 +11,7 @@ import CourseComponent from "../components/CourseComponent";
 const TimeTable = () => {
     const colorMode = useColorScheme();
     const bgColor = colorMode === 'dark' ? DARK_BACKGROUND : LIGHT_BACKGROUND;
-    const [date, setDate] = React.useState(new Date());
+    const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
 
     const [data, setData] = useState<Course[]>([]);
@@ -45,6 +45,8 @@ const TimeTable = () => {
         console.log('Update', date);
         setLoading(true)
         APIService.getTimeTable(date).then((res) => {
+            // check if response date matches current date (in case of async)
+
             const timetable = res.courseTable;
             setLoading(false)
             console.log('Time Table0: ', JSON.stringify(timetable));

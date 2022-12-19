@@ -4,6 +4,8 @@ import {SafeAreaView, useColorScheme} from "react-native";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "../theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+export let usernameUpdate = 1;
+
 const Settings = ({navigation}: any) => {
     // TODO: use less of the stuff below and concatenate the edit buttons into one component with modifiable props
     const colorMode = useColorScheme();
@@ -59,6 +61,7 @@ const Settings = ({navigation}: any) => {
                                     AsyncStorage.setItem('settings_demo', nextChecked + '').then(()=> {
                                         setDemoMode(nextChecked);
                                         console.log('Saved');
+                                        usernameUpdate += 1;
                                     });
                                 }}/>
                             </HStack>

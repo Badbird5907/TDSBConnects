@@ -7,6 +7,7 @@ import {userInfo} from "../services/APIService";
 import {useColorScheme} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {demoUserId, demoUserName} from "../utils/demo";
+import {usernameUpdate} from "../pages/Settings";
 
 const getIcon = (screenName: string) => {
     switch (screenName) {
@@ -27,17 +28,26 @@ export default function CustomDrawer(props: any) {
     const textColor = colorMode === 'dark' ? 'white' : 'black';
     const secondaryTextColor = colorMode === 'dark' ? 'gray.400' : 'gray.500';
 
-    const [userName, setUserName] = React.useState(userInfo?.userName);
-    const [userId, setUserId] = React.useState(userInfo?.userId);
+    const [userName, setUserName] = React.useState<string | undefined>(undefined);
+    const [userId, setUserId] = React.useState<string | undefined>(undefined);
 
     useEffect(()=> {
         AsyncStorage.getItem('settings_demo').then((demo) => {
             if (demo === "true") {
+                console.log('Using demo user');
                 setUserName(demoUserName);
                 setUserId(demoUserId);
+            } else {
+                if (!userInfo) {
+                    console.log('No user info!');
+                    return
+                }
+                console.log('Setting username to', userInfo.userName, 'and id to', userInfo.userId);
+                setUserName(userInfo.userName);
+                setUserId(userInfo.userId);
             }
         })
-    }, [props]);
+    }, [userInfo, usernameUpdate]);
 
     return (
         <DrawerContentScrollView {...props} style={{
@@ -45,12 +55,13 @@ export default function CustomDrawer(props: any) {
         }}>
             <VStack space="6" my="2" mx="1">
                 <Box px="4">
-                    <Text bold color="gray.700" style={{color: textColor}}>
-                        {userName}
-                    </Text>
-                    <Text fontSize="14" mt="1" color={secondaryTextColor} fontWeight="500">
+                    {userName &&
+                        <Text bold color="gray.700" style={{color: textColor}}>
+                            {userName}
+                        </Text>}
+                    {userId && <Text fontSize="14" mt="1" color={secondaryTextColor} fontWeight="500">
                         {userId}
-                    </Text>
+                    </Text>}
                 </Box>
                 <VStack divider={<Divider bg={"gray.400"}/>} space="4">
                     <VStack space="3">

@@ -65,9 +65,15 @@ const TimeTable = () => {
                 </>
             )}
             {loading ? <Text>Loading...</Text> :
-                <FlatList data={data} renderItem={({item}) =>
-                    <CourseComponent item={item}/>
-                } keyExtractor={item => item.courseKey}/>
+                <>
+                    {
+                        data && data.length > 0 ?
+                            <FlatList data={data} renderItem={({item}) =>
+                                <CourseComponent item={item}/>
+                            } keyExtractor={item => item.courseKey}/> :
+                            <Text>No courses found</Text>
+                    }
+                </>
             }
 
             <Fab renderInPortal={false} shadow={2} size="sm"

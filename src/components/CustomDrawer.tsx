@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {DrawerContentScrollView,} from "@react-navigation/drawer";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {Box, Divider, HStack, Icon, Pressable, Text, VStack,} from "native-base";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND} from "../theme";
 import {userInfo} from "../services/APIService";
 import {useColorScheme} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {demoUserId, demoUserName} from "../utils/demo";
 
 const getIcon = (screenName: string) => {
     switch (screenName) {
@@ -25,6 +27,18 @@ export default function CustomDrawer(props: any) {
     const textColor = colorMode === 'dark' ? 'white' : 'black';
     const secondaryTextColor = colorMode === 'dark' ? 'gray.400' : 'gray.500';
 
+    const [userName, setUserName] = React.useState(userInfo?.userName);
+    const [userId, setUserId] = React.useState(userInfo?.userId);
+
+    useEffect(()=> {
+        AsyncStorage.getItem('settings_demo').then((demo) => {
+            if (demo === "true") {
+                setUserName(demoUserName);
+                setUserId(demoUserId);
+            }
+        })
+    }, [props]);
+
     return (
         <DrawerContentScrollView {...props} style={{
             backgroundColor: bgColor,
@@ -32,10 +46,10 @@ export default function CustomDrawer(props: any) {
             <VStack space="6" my="2" mx="1">
                 <Box px="4">
                     <Text bold color="gray.700" style={{color: textColor}}>
-                        {userInfo?.userName}
+                        {userName}
                     </Text>
                     <Text fontSize="14" mt="1" color={secondaryTextColor} fontWeight="500">
-                        {userInfo?.userId}
+                        {userId}
                     </Text>
                 </Box>
                 <VStack divider={<Divider bg={"gray.400"}/>} space="4">

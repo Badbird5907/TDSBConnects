@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Button, Divider, FormControl, Input, Modal, Text, VStack} from "native-base";
+import {Button, Center, Divider, FormControl, HStack, Input, Modal, Switch, Text, VStack} from "native-base";
 import {SafeAreaView, useColorScheme} from "react-native";
 import {DARK_BACKGROUND, LIGHT_BACKGROUND, styles} from "../theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,16 +11,26 @@ const Settings = ({navigation}: any) => {
     const [openHiddenClasses, setOpenHiddenClasses] = React.useState(false);
     const [showHiddenClasses, setShowHiddenClasses] = React.useState(false);
     const [hiddenClasses, setHiddenClasses] = React.useState("");
+
+    const [demoMode, setDemoMode] = React.useState(false);
+    const [showDemoMode, setShowDemoMode] = React.useState(false);
     useEffect(() => {
         AsyncStorage.getItem('hiddenClasses').then((value) => {
             if (value !== null) {
-                console.log('hiddenClasses', value);
                 setShowHiddenClasses(true);
                 setHiddenClasses(value);
             } else {
                 setShowHiddenClasses(true);
                 setHiddenClasses("");
             }
+        });
+        AsyncStorage.getItem('settings_demo').then((value) => {
+            if (value !== null) {
+                setDemoMode(value === "true");
+            } else {
+                setDemoMode(false);
+            }
+            setShowDemoMode(true);
         });
     }, [])
     return (
@@ -41,6 +51,19 @@ const Settings = ({navigation}: any) => {
                         <Button variant={"ghost"} onPress={(event) => {
                             setOpenHiddenClasses(true);
                         }}>Edit hidden classes</Button>}
+                    {showDemoMode &&
+                        <>
+                            <HStack>
+                                <Text paddingTop={13}>Demo mode</Text>
+                                <Switch isChecked={demoMode} onToggle={(nextChecked) => {
+                                    AsyncStorage.setItem('settings_demo', nextChecked + '').then(()=> {
+                                        setDemoMode(nextChecked);
+                                        console.log('Saved');
+                                    });
+                                }}/>
+                            </HStack>
+                        </>
+                    }
                 </VStack>
             </SafeAreaView>
         </>

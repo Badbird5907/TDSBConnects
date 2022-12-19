@@ -5,6 +5,7 @@ import CredentialsService from "./CredentialsService";
 import {instanceToPlain, plainToInstance} from "class-transformer";
 import {TimeTableRequest, TimetableResponse} from "tdsb-connects-api/build/main/lib/schema/impl/timetable";
 import {formatSmallDate} from "../utils";
+import {demoTimeTable} from "../utils/demo";
 
 
 let tdsbConnects: TDSBConnectsAPI;
@@ -57,41 +58,46 @@ class APIService {
     }
 
     async getTimeTable(date: Date): Promise<TimetableResponse> {
-        if (cachedTimeTable) {
-            // check if cachedTimeTable is from today
-            const today = new Date();
-            if (cachedTimeTable && cachedTimeTableDate === date.getDate() && cachedTimeTableMonth === date.getMonth() && cachedTimeTableYear === date.getFullYear()) {
-                console.log('Returning cached timetable');
-                return new Promise((resolve, reject) => {
-                    resolve(cachedTimeTable);
-                });
-            }
-        }
-        if (!tdsbConnects) {
-            return new Promise((resolve, reject) => {
-                reject('Not logged in');
-            });
-        }
-        const dateStr = formatSmallDate(date);
         return new Promise((resolve, reject) => {
-            console.log('School id: ', this.getSchoolId())
-            tdsbConnects.call(new TimeTableRequest(this.getSchoolId() + '', dateStr)).then((response) => {
-                AsyncStorage.getItem("hiddenClasses").then((hiddenClasses) => {
-                    // comma seperated list of class IDs
-                    // loop through response.courseTable and check if classCode is in hiddenClasses
-                    if (hiddenClasses) {
-                        const hiddenClassesList = hiddenClasses.split(',');
-                        response.courseTable = response.courseTable.filter((course: any) => {
-                            return !hiddenClassesList.includes(course.studentCourse.classCode);
-                        });
+            AsyncStorage.getItem('settings_demo').then((demo) => {
+                const demoBool = demo === 'true';
+                if (demoBool) {
+                    resolve(demoTimeTable);
+                    return;
+                }
+                if (cachedTimeTable) {
+                    // check if cachedTimeTable is from today
+                    const today = new Date();
+                    if (cachedTimeTable && cachedTimeTableDate === date.getDate() && cachedTimeTableMonth === date.getMonth() && cachedTimeTableYear === date.getFullYear()) {
+                        console.log('Returning cached timetable');
+                        resolve(cachedTimeTable);
+                        return;
                     }
-                    resolve(response);
+                }
+                if (!tdsbConnects) {
+                    reject('Not logged in');
+                    return;
+                }
+                const dateStr = formatSmallDate(date);
+                console.log('School id: ', this.getSchoolId())
+                tdsbConnects.call(new TimeTableRequest(this.getSchoolId() + '', dateStr)).then((response) => {
+                    AsyncStorage.getItem("hiddenClasses").then((hiddenClasses) => {
+                        // comma seperated list of class IDs
+                        // loop through response.courseTable and check if classCode is in hiddenClasses
+                        if (hiddenClasses) {
+                            const hiddenClassesList = hiddenClasses.split(',');
+                            response.courseTable = response.courseTable.filter((course: any) => {
+                                return !hiddenClassesList.includes(course.studentCourse.classCode);
+                            });
+                        }
+                        resolve(response);
+                    });
+                }).catch(error => {
+                    console.error(error);
+                    reject(error);
                 });
-            }).catch(error => {
-                console.error(error);
-                reject(error);
             });
-        });
+        })
     }
 
     getSchoolId() {

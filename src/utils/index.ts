@@ -12,7 +12,6 @@ export const formatDate = (input: string) => {
                 date = otherDateFormat.parse(in);
             }
      */
-    console.log('Formatting date: ', input);
     if (input.includes("Z")) {
         return moment(input, dateFormat);
     } else {

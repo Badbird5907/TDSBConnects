@@ -25,3 +25,6 @@ export const momentToTime = (input: moment.Moment) => {
 export const formatSmallDate = (input: Date) => {
     return moment(input).format(smallDateFormat);
 }
+export const dateToDate = (input: string) => {
+    return formatDate(input).toDate();
+}

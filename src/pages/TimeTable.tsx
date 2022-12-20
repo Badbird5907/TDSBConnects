@@ -7,6 +7,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import APIService from "../services/APIService";
 import {Course} from "tdsb-connects-api/build/main/lib/schema/impl/timetable";
 import CourseComponent from "../components/CourseComponent";
+import {dateToDate} from "../utils";
 
 const TimeTable = () => {
     const colorMode = useColorScheme();
@@ -45,9 +46,23 @@ const TimeTable = () => {
         console.log('Update', date);
         setLoading(true)
         APIService.getTimeTable(date).then((res) => {
-            // check if response date matches current date (in case of async)
-
             const timetable = res.courseTable;
+            // check if response date matches current date (in case of async)
+            var invalid = false;
+            if (timetable) {
+                for (let course of timetable) {
+                    const d: string = course.studentCourse.date
+                    const dateObj: Date = dateToDate(d)
+                    if (dateObj.getDate() !== date.getDate() || dateObj.getMonth() !== date.getMonth() || dateObj.getFullYear() !== date.getFullYear()) {
+                        invalid = true
+                        break
+                    }
+                }
+            }
+            if (invalid) {
+                console.log('Invalid response, ignoring');
+                return
+            }
             setLoading(false)
             console.log('Time Table0: ', JSON.stringify(timetable));
             setData(timetable);

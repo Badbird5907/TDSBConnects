@@ -87,7 +87,7 @@ class APIService {
                         // comma seperated list of class IDs
                         // loop through response.courseTable and check if classCode is in hiddenClasses
                         if (hiddenClasses) {
-                            const hiddenClassesList = hiddenClasses.split(',');
+                            const hiddenClassesList = hiddenClasses.trim().split(',');
                             response.courseTable = response.courseTable.filter((course: any) => {
                                 return !hiddenClassesList.includes(course.studentCourse.classCode);
                             });

@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "TDSBConnects",
+    "slug": "TDSBConnects",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "dev.badbird.tdsbconnects"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "sentry-expo"
+    ],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "badbird5907",
+            "project": "tdsb-connects",
+            "authToken": "SENTRY_AUTH_TOKEN"
+          }
+        }
+      ]
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4d418083-f782-4bc9-8c37-b3173fb22e4e"
+      }
+    }
+  }
+}

@@ -38,7 +38,7 @@ const CourseComponent = (props: any) => {
                                 {studentCourse.className}
                             </Heading>
                             <Text fontSize={"md"} fontWeight="500" ml="-0.5" mt="-1" marginTop={1}>
-                                {studentCourse.classCode}
+                                {studentCourse.classCode}{studentCourse.roomNo ? ` | Room ${studentCourse.roomNo}` : ''}
                             </Text>
                         </Stack>
                         <Text fontWeight="400">

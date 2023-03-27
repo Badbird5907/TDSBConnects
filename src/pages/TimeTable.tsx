@@ -151,7 +151,7 @@ const TimeTable = () => {
                 </>
             }
 
-            <Fab renderInPortal={false} shadow={2} size="sm"
+            <Fab renderInPortal={false} shadow={2} size="lg"
                  icon={<Icon color="white" as={<MaterialCommunityIcons name={"calendar"}/>} name="plus" size="sm"/>}
                  onPress={() => {
                      showDatepicker();

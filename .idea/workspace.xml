@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0955b5d-079c-441e-b472-6cdb9de302c8" name="Changes" comment="trim">
+    <list default="true" id="f0955b5d-079c-441e-b472-6cdb9de302c8" name="Changes" comment="add room number">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/CourseComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CourseComponent.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +16,7 @@
     <execution />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="2501" />
+    <option name="totalTimeSeconds" value="2925" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,7 +46,7 @@
       <option name="presentableId" value="Default" />
       <updated>1671516081033</updated>
       <workItem from="1671516082320" duration="1075000" />
-      <workItem from="1675436497190" duration="2209000" />
+      <workItem from="1675436497190" duration="3965000" />
     </task>
     <task id="LOCAL-00001" summary="trim">
       <created>1671553797205</created>
@@ -57,7 +55,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671553797205</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add room number">
+      <created>1675444052863</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1675444052863</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -65,6 +70,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="trim" />
-    <option name="LAST_COMMIT_MESSAGE" value="trim" />
+    <MESSAGE value="add room number" />
+    <option name="LAST_COMMIT_MESSAGE" value="add room number" />
   </component>
 </project>

@@ -2,6 +2,7 @@
   "expo": {
     "name": "TDSBConnects",
     "slug": "TDSBConnects",
+    "jsEngine": "hermes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,9 +16,11 @@
       "**/*"
     ],
     "ios": {
+      "jsEngine": "hermes",
       "supportsTablet": true
     },
     "android": {
+      "jsEngine": "hermes",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#3d3d3d"
